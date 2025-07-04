@@ -1,0 +1,509 @@
+MDScreenManager:
+    id: sm
+    MDScreen:
+        name: "splash"
+        FitImage:
+            source: app.images_path + "/back.png"
+            pos: root.pos
+            size: root.size
+        MDFloatLayout:
+            MDCard:
+                id: img_card
+                size_hint: None, None
+                size: dp(200), dp(200)
+                radius: [16,]
+                pos_hint: {"center_x":.5, "center_y":.8}
+                FitImage:
+                    source: app.images_path + "/icon.png"
+                    allow_stretch: True
+                    keep_ratio: True
+                    radius: img_card.radius
+            MDLabel:
+                text: "My Store Manager"
+                halign: "center"
+                size_hint_y: None
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                pos_hint: {"center_x":.5, "center_y":.5}
+                theme_font_size: "Custom"
+                font_size: sp(30)
+                height: dp(40)
+            MDCircularProgressIndicator:
+                pos_hint: {"center_x":.5, "center_y":.2}
+                size_hint: None, None
+                size: dp(50), dp(50)
+            
+                
+
+    MDScreen:
+        name: "intro"
+        FitImage:
+            source: app.images_path + "/back.png"
+            pos: root.pos
+            size: root.size
+        MDFloatLayout:
+            MDLabel:
+                text: "Welcome! sign in as: "
+                halign: "center"
+                size_hint_y: None
+                height: dp(40)
+                theme_font_size: "Custom"
+                font_size: sp(27)
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x":.5, "center_y":.8}
+            MDCard:
+                pos_hint: {"center_x":.2, "center_y":.5}
+                size_hint: None, None
+                size: dp(200), dp(200)
+                radius: 12
+                on_release: app.user_dialog("Admin")
+                MDRelativeLayout:
+                    FitImage:
+                        source: app.images_path + "/admin.png"
+                        keep_ratio: True
+                        allow_stretch: True
+                        radius: 12
+                    MDLabel:
+                        text: "Administrator"
+                        pos_hint: {"center_y":.1}
+                        theme_font_size: "Custom"
+                        font_size: sp(25)
+                        theme_text_color: "Custom"
+                        text_color: "blue"
+                        halign: "center"
+                        bold: True
+            MDCard:
+                pos_hint: {"center_x":.8, "center_y":.5}
+                size_hint: None, None
+                size: dp(200), dp(200)
+                radius: 12
+                on_release: 
+                    app.user_dialog("Standard")
+                    app.show_items()
+                MDRelativeLayout:
+                    FitImage:
+                        source: app.images_path + "/user.png"
+                        keep_ratio: True
+                        allow_stretch: True
+                        radius: 12
+                    MDLabel:
+                        text: "Standard User"
+                        pos_hint: {"center_y":.1}
+                        theme_font_size: "Custom"
+                        font_size: sp(25)
+                        theme_text_color: "Custom"
+                        text_color: "blue"
+                        halign: "center"
+                        bold: True
+    MDScreen:
+        name: "Admin_panel"
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: root.pos
+                size: root.size
+        MDBoxLayout:
+            orientation: "vertical"
+            MDBoxLayout:
+                padding: dp(10)
+                size_hint_y: None
+                height: dp(40)
+                MDIconButton:
+                    icon: "arrow-left"
+                    on_release: sm.current = "intro"
+                    pos_hint: {"center_y":.5}
+                MDLabel:
+                    text: "ADMIN PANEL"
+                    bold: True
+                    theme_font_size: "Custom"
+                    font_size: sp(30)
+                    theme_text_color: "Custom"
+                    text_color: "blue"
+                    halign: "center"
+            MDDivider:
+                color: "gold"
+                
+            MDBoxLayout:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: .3
+                    spacing: dp(10)
+                    FitImage:
+                        source: app.images_path + "/admin.png"
+                        keep_ratio: True
+                        allow_stretch: True
+                        radius: 12
+                    MDDivider:
+                        color: "gold"
+                    MDLabel:
+                        text: "Quick Access"
+                        size_hint_y: None
+                        height: dp(30)
+                        bold: True
+                        halign: "center"
+                        theme_text_color: "Custom"
+                        text_color: "tomato"
+                    MDDivider:
+                        color: "gold"
+                    MDList:
+                        spacing: dp(20)
+                        MDListItem:
+                            id: prod
+                            theme_bg_color: "Custom"
+                            md_bg_color: "white"
+                            on_release: 
+                                app.show_products()
+                                self.md_bg_color: "green"
+                                user_.md_bg_color: "white"
+                                trans.md_bg_color: "white"
+                                analysis.md_bg_color: "white"
+                            MDListItemLeadingIcon:
+                                icon: "book"
+                                theme_icon_color: "Custom"
+                                icon_color: "teal"
+                            MDListItemHeadlineText:
+                                text: "Products"
+                                theme_text_color: "Custom"
+                                text_color: "purple"
+                        MDListItem:
+                            id: user_
+                            theme_bg_color: "Custom"
+                            md_bg_color: "white"
+                            on_release: 
+                                app.show_users()
+                                self.md_bg_color: "green"
+                                prod.md_bg_color: "white"
+                                trans.md_bg_color: "white"
+                                analysis.md_bg_color: "white"
+                            MDListItemLeadingIcon:
+                                icon: "account"
+                                theme_icon_color: "Custom"
+                                icon_color: "teal"
+                            MDListItemHeadlineText:
+                                text: "Users"
+                                theme_text_color: "Custom"
+                                text_color: "purple"
+                        MDListItem
+                            id: trans
+                            theme_bg_color: "Custom"
+                            md_bg_color: "white"
+                            on_release: 
+                                app.show_transactions()
+                                self.md_bg_color: "green"
+                                prod.md_bg_color: "white"
+                                user_.md_bg_color: "white"
+                                analysis.md_bg_color: "white"
+                            MDListItemLeadingIcon:
+                                icon: "shuffle"
+                                theme_icon_color: "Custom"
+                                icon_color: "teal"
+                            MDListItemHeadlineText:
+                                text: "Transactions"
+                                theme_text_color: "Custom"
+                                text_color: "purple"
+                        MDListItem:
+                            id: analysis
+                            theme_bg_color: "Custom"
+                            md_bg_color: "white"
+                            on_release: 
+                                app.show_analysis()
+                                self.md_bg_color: "green"
+                                user_.md_bg_color: "white"
+                                trans.md_bg_color: "white"
+                                prod.md_bg_color: "white"
+                            MDListItemLeadingIcon:
+                                icon: "chart-line"
+                                theme_icon_color: "Custom"
+                                icon_color: "teal"
+                            MDListItemHeadlineText:
+                                text: "Analysis"
+                                theme_text_color: "Custom"
+                                text_color: "purple"
+                        
+                    Widget:
+
+                        
+                MDDivider:
+                    orientation: "vertical"
+                    color: "gold"
+                MDBoxLayout:
+                    size_hint_x:.7
+                    orientation: "vertical"
+                    id: admin_area
+                    MDBoxLayout:
+                        id: admin_header
+                        size_hint_y: None
+                        height: dp(45)
+                    RecycleView:
+                        id: admin_prev
+                        scroll_type: ["bars", "content"]
+                        bar_width: 10
+                        size_hint: 1, 1
+                        RecycleBoxLayout:
+                            id: rvb
+                            default_size: None, dp(300)
+                            default_size_hint: 1, None
+                            size_hint_y: None
+                            height: self.minimum_height
+                            orientation: "vertical"
+                    MDBoxLayout:
+                        id: admin_footer
+                    MDBoxLayout:
+                        id: btn_container
+                        size_hint_y: None
+                        height: dp(50)
+                        padding: dp(10)
+                        Widget:
+                        MDButton:
+                            id: prev_fab_btn
+                            pos_hint: {"center_y":.5}
+                            MDButtonText:
+                                id: prev_fab_text
+                            MDButtonIcon:
+                                icon: "plus"
+                        Widget:
+    MDScreen:
+        name: "Standard_panel"
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: root.pos
+                size: root.size
+        MDBoxLayout:
+            orientation: "vertical"
+            MDBoxLayout:
+                padding: dp(10)
+                size_hint_y: None
+                height: dp(40)
+                MDIconButton:
+                    icon: "arrow-left"
+                    on_release: sm.current = "intro"
+                    pos_hint: {"center_y":.5}
+                MDLabel:
+                    text: "STANDARD USER PANEL"
+                    bold: True
+                    theme_font_size: "Custom"
+                    font_size: sp(30)
+                    theme_text_color: "Custom"
+                    text_color: "blue"
+                    halign: "center"
+            MDDivider:
+                color: "gold"
+                
+            MDBoxLayout:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    size_hint_x: .7
+                    MDBoxLayout:
+                        spacing: dp(10)
+                        padding: dp(5)
+                        size_hint_y: None
+                        height: dp(75)
+                        MDTextField:
+                            id: search_field
+                            MDTextFieldHintText:
+                                text: "Search items..."
+                        MDFabButton:
+                            id: search_btn
+                            icon: "magnify"
+                            theme_icon_color: "Custom"
+                            icon_color: "green"
+                            on_release: 
+                                app.search_items(search_field.text)
+                    MDDivider:
+                        color: "gold"
+                    RecycleView:
+                        id: standard_prev
+                        scroll_type: ["bars", "content"]
+                        bar_width: 10
+                        size_hint: 1, 1
+                        RecycleGridLayout:
+                            id: rvg
+                            cols: 6
+                            default_size: dp(150), dp(200)
+                            default_size_hint: None, None
+                            size_hint_y: None
+                            height: self.minimum_height
+                            spacing: dp(10)
+                    MDBoxLayout:
+                        size_hint_y: None
+                        height: dp(80)
+                        spacing: dp(20)
+                        padding: dp(10)
+                        Widget:
+                        MDExtendedFabButton:
+                            on_release: app.preview_purchase()
+                            pos_hint: {"center_y":.5}
+                            fab_state: "expand"
+                            MDExtendedFabButtonText:
+                                text: "Start Transactions"
+                            MDExtendedFabButtonIcon:
+                                icon: "plus"
+                        Widget:
+                        Widget:
+
+                MDDivider:
+                    orientation: "vertical"
+                    color: "gold"
+                MDBoxLayout:
+                    size_hint_x:.3
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Preview"
+                        size_hint_y: None
+                        halign: "center"
+                        height: dp(35)
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: "tomato"
+                    MDDivider:
+                        color: "gold"
+                    MDRelativeLayout:
+                        id: item_prev
+                        size_hint: 1, 1
+                        MDLabel:
+                            text: "Select product to preview"
+                            halign: "center"
+                            pos_hint: {"center_x":.5, "center_y":.5}
+    MDScreen:
+        name: "purchase_screen"
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: root.pos
+                size: root.size
+        MDBoxLayout:
+            orientation: "vertical"
+            MDBoxLayout:
+                padding: dp(10)
+                size_hint_y: None
+                height: dp(40)
+                MDIconButton:
+                    icon: "arrow-left"
+                    on_release: sm.current = "Standard_panel"
+                    pos_hint: {"center_y":.5}
+            MDDivider:
+                color: "gold"
+                
+            MDBoxLayout:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    spacing: dp(20)
+                    size_hint_x: .7
+                    MDBoxLayout:
+                        spacing: dp(10)
+                        padding: dp(5)
+                        size_hint_y: None
+                        height: dp(75)
+                        MDTextField:
+                            id: prod_id_field
+                            input_filter: "int"
+                            on_text_validate: app.preview_purchase()
+                            MDTextFieldHintText:
+                                text: "Item ID"
+                    MDDivider:
+                        color: "gold"
+                    MDRelativeLayout:
+                        id: purchase_prev
+                        size_hint: 1, 1
+                    MDDivider:
+                        color: "gold"
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        spacing: dp(10)
+                        MDBoxLayout:
+                            Widget:
+                            MDButton:
+                                id: calc_btn
+                                theme_bg_color: "Custom"
+                                md_bg_color: "green"
+                                pos_hint: {"center_y":.5}
+                                MDButtonText:
+                                    text: "Calculate"
+                                    theme_text_color: "Custom"
+                                    text_color: "white"
+                            Widget:
+                        MDBoxLayout:
+                            spacing: dp(5)
+                            MDLabel:
+                                text: "Paid: "
+                                size_hint_x:.3
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                bold: True
+                            MDTextField:
+                                id: paid
+                                size_hint_x:.4
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                input_filter: "float"
+                                bold: True
+                            Widget:
+                                size_hint_x:.3
+                        MDBoxLayout:
+                            spacing: dp(5)
+                            MDLabel:
+                                text: "Total: "
+                                size_hint_x:.3
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                bold: True
+                            MDLabel:
+                                id: total
+                                text: "0.00"
+                                size_hint_x:.4
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                bold: True
+                            Widget:
+                                size_hint_x:.3
+                        MDBoxLayout:
+                            spacing: dp(5)
+                            MDLabel:
+                                text: "Balance: "
+                                size_hint_x:.3
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                bold: True
+                            MDLabel:
+                                id: balance
+                                text: "0.00"
+                                size_hint_x:.4
+                                halign: "center"
+                                theme_font_size: "Custom"
+                                font_size: sp(25)
+                                bold: True
+                            Widget:
+                                size_hint_x:.3
+                                
+                MDDivider:
+                    orientation: "vertical"
+                    color: "gold"
+                MDBoxLayout:
+                    size_hint_x:.3
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Receipt Preview"
+                        size_hint_y: None
+                        halign: "center"
+                        height: dp(35)
+                        bold: True
+                        theme_text_color: "Custom"
+                        text_color: "tomato"
+                    MDDivider:
+                        color: "gold"
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        spacing: dp(5)
+                        id: receipt_prev
+                        size_hint: 1, 1
