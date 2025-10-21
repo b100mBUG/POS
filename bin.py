@@ -11,3 +11,4 @@ def generate_license(username: str) -> str:
     license_key = f"{username}|{expiry_str}|{checksum}"
     print(license_key)
 generate_license(user_name.upper())
+
